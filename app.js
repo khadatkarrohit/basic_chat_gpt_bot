@@ -26,16 +26,15 @@ io.on("connection", (socket) => {
   socket.on("sendMessage", async (message, callback) => {
     try {
       // Add the user message to the conversation history
+      console.log("before Api -- ", message);
       conversationHistory.push({ role: "user", content: message });
 
       const completion = await openai.createChatCompletion({
         model: "gpt-3.5-turbo",
         messages: conversationHistory,
       });
-
-      console.log('completion -- ', completion);
-      const response = completion.data.choices[0].message.content;
-      console.log('response -- ', response);
+      
+      const response = completion.data.choices[0].message.content;      
 
       // Add the assistant's response to the conversation history
       conversationHistory.push({ role: "assistant", content: response });

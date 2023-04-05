@@ -5,6 +5,7 @@ const messageInput = document.getElementById("message-input");
 const messages = document.getElementById("messages");
 
 function displayMessage(role, message) {
+  console.log("Inside Display -- ", message);
   const div = document.createElement("div");
   div.innerHTML = `<p><b>${
     role === "user" ? "You" : "Assistant"
@@ -17,6 +18,7 @@ messageForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
   const message = messageInput.value;
+  console.log("Inside Submit -- ", message);
   displayMessage("user", message); // Display user's message in the chat
 
   socket.emit("sendMessage", message, (error) => {
@@ -30,5 +32,6 @@ messageForm.addEventListener("submit", (e) => {
 });
 
 socket.on("message", (message) => {
+  console.log("message socket on method -- ", message)
   displayMessage("assistant", message); // Display assistant's message in the chat
 });
